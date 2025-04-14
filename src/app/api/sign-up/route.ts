@@ -2,7 +2,6 @@ import dbConnect from "@/lib/dbConnect";
 import userModel from "@/model/User";
 import bcrypt from "bcryptjs";
 import { sendVerificationEmail } from "@/helpers/sendVerificationEmail";
-import { Condiment } from "next/font/google";
 
 export async function POST(request: Request) {
     await dbConnect()
