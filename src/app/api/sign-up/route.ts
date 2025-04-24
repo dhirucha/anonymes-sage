@@ -51,7 +51,7 @@ export async function POST(request: Request) {
       const newUser = new userModel({
         username,
         email,
-        password: hashedPassword,
+        password: hashedPassword, 
         verifyCode,
         verifyCodeExpiry: expiryDate,
         isVerified: false,
@@ -59,12 +59,16 @@ export async function POST(request: Request) {
         messages: [],
       });
 
+
       await newUser.save();
     }
 
     // Send verification email
-    const emailResponse = await sendVerificationEmail(email, username, verifyCode)
-
+    const emailResponse = await sendVerificationEmail(
+      email,
+      username,
+      verifyCode
+    );
     if (!emailResponse.success) {
       return Response.json(
         {
@@ -83,13 +87,17 @@ export async function POST(request: Request) {
       { status: 201 }
     );
   } catch (error) {
-    console.error('Error registering user:', error); // Already there
-    return Response.json({
+    console.error('Error registering user:', error);
+  
+    const errorMessage =
+      error instanceof Error ? error.message : 'Unknown error';
+  
+    return Response.json(
+      {
         success: false,
-        message: error instanceof Error ? error.message : "Unknown error"
-    }, {
-        status: 500
-    });
+        message: errorMessage,
+      },
+      { status: 500 }
+    );
   }
-
 }
