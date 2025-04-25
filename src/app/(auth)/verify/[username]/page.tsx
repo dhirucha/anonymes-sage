@@ -17,7 +17,6 @@ import { Button } from "@/components/ui/button";
 const VerifyAccount = () => {
   const router = useRouter();
   const params = useParams();
-  const username = params.username as string;
 
   const form = useForm<z.infer<typeof verifySchema>>({
     resolver: zodResolver(verifySchema),
